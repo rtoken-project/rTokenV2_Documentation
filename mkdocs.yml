@@ -1,0 +1,4 @@
+site_name: rToken Docs
+repo_url: https://github.com/rtoken-project/rtoken-monorepo/tree/master/packages/contracts
+theme: readthedocs
+

@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  
+  
+  <link rel="shortcut icon" href="../img/favicon.ico">
+  <title>Components - rToken Docs</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700" />
+
+  <link rel="stylesheet" href="../css/theme.css" />
+  <link rel="stylesheet" href="../css/theme_extra.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css" />
+  
+  <script>
+    // Current page data
+    var mkdocs_page_name = "Components";
+    var mkdocs_page_input_path = "components.md";
+    var mkdocs_page_url = null;
+  </script>
+  
+  <script src="../js/jquery-2.1.1.min.js" defer></script>
+  <script src="../js/modernizr-2.8.3.min.js" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script> 
+  
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+    <div class="wy-side-scroll">
+      <div class="wy-side-nav-search">
+        <a href=".." class="icon icon-home"> rToken Docs</a>
+        <div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="..">Welcome to rToken</a>
+                    </li>
+                </ul>
+                <ul class="current">
+                    <li class="toctree-l1 current"><a class="reference internal current" href="./">Components</a>
+    <ul class="current">
+    <li class="toctree-l2"><a class="reference internal" href="#rtokens">rTokens</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#deployment">Deployment</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#rtoken-accounts">rToken Accounts</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#minting">Minting</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#control-over-interest-streams">Control Over Interest Streams</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#accounting-construct">Accounting Construct</a>
+    </li>
+        </ul>
+    </li>
+    </ul>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../overview/">Overview</a>
+                    </li>
+                </ul>
+      </div>
+    </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="..">rToken Docs</a>
+      </nav>
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="..">Docs</a> &raquo;</li>
+    
+      
+    
+    <li>Components</li>
+    <li class="wy-breadcrumbs-aside">
+      
+        <a href="https://github.com/rtoken-project/rtoken-monorepo/tree/master/packages/contracts/edit/master/docs/components.md"
+          class="icon icon-github"> Edit on GitHub</a>
+      
+    </li>
+  </ul>
+  
+  <hr/>
+</div>
+          <div role="main">
+            <div class="section">
+              
+                <h2 id="components">Components</h2>
+<hr />
+<h3 id="rtokens"><strong>rTokens</strong></h3>
+<p>rTokens are wrapped versions of their underlying ERC20 assets that earn interest from the specified Allocation Strategy that can be redirected to flow to recipients that the holder of the underlying asset chooses.</p>
+<p>The rToken contract keeps track of the total amount of minted rTokens, user balances, and User Buckets. </p>
+<h5 id="deployment"><em>Deployment</em></h5>
+<p>At deployment, an rToken contract must specify the address of the underlying ERC20 asset. To be useful as an rToken, the underlying ERC20 asset should be available to supply on one or more Allocation Strategy platforms to generate interest.</p>
+<h5 id="rtoken-accounts"><em>rToken Accounts</em></h5>
+<p>Each address has an rToken Account. The account data includes:
+<code>userBuckets</code> – an array specifying the amounts of rTokens committed to each active <code>hatID</code>
+internal accounting information,
+account statistics.</p>
+<h5 id="minting"><em>Minting</em></h5>
+<p>rTokens are minted and redeemed at a ratio of 1:1 to their underlying asset. So 25 DAI can mint 25 rDAI, which are then redeemable for 25 DAI.</p>
+<p>Like other ERC20 wrapper contracts, rToken contracts require holders of the underlying asset to <code>approve</code> the amount of the asset to be used to mint rTokens. This amount can be queried with <code>allowance</code>.</p>
+<h5 id="control-over-interest-streams"><em>Control Over Interest Streams</em></h5>
+<p>The holder of the underlying asset remains in control of where the interest streams flow, but cannot claw back interest that has already been redirected. The holder can stop sending interest to a recipient (or recipients) by: 1) redeeming all the principal for the underlying asset or 2) changing the set of recipients with the <code>changeHat</code> function. </p>
+<h5 id="accounting-construct"><em>Accounting Construct</em></h5>
+<p>rTokens work by recording the amount of the underlying asset that an address mints (the principal) as a fixed debt that must be repaid, and then “lending” out the now interest earning principal to the interest recipients. The recipients can redeem the amount of rTokens that have accrued from interest, but they cannot redeem the debt portion which represents the principal.</p>
+<p><em>Example</em></p>
+<blockquote>
+<p>Alice mints 1,000 rDAI and designates Bob as the only interest recipient. </p>
+<p>At that time Bob has received a loan of 1,000 rDAI and a debt to repay 1,000 rDAI to Alice, meaning a net position of 0 rDAI.  </p>
+<p>If Bob calls redeemAll() to try to get all the underlying DAI, he will not receive anything because he can only redeem the amount in excess of the debt. </p>
+<p>Now fast forward to a time when 75 DAI in interest has accumulated. Bob's “loan” is now worth 1,075 DAI but his debt remains 1,000 DAI, so he can redeem 75 DAI.   </p>
+</blockquote>
+<p>Querying and Claiming Interest 
+rTokens do not automatically increment token balances as interest accrues. Token balances in Ethereum can only be updated through transactions. But there is a way to query the amount of interest that would increment one's rToken balance after a transaction: <code>interestPayableOf</code>. </p>
+<p>To understand what is happening with interest and how to claim it, there are two values that should be queried for each address: 
+1) rToken wallet balance (for minters, equal to the amount of the underlying asset principal, for recipients it will be 0 until a transaction updates the balance)
+2) interestPayableOf (the amount of accrued interest that may be claimed by the address)</p>
+<p>To illustrate what's going on when, let's look at a simple example where Alice mints 100 rDAI to the self hat (meaning she “redirects” all the interest to herself), earns 8 rDAI in interest and then claims it.<br />
+<img alt="step by step self hat illustration" src="../img/rToken_interest_process3.png" title="step by step self hat illustration" /></p>
+<p>This illustration shows each step, but calling redeemAll also calls payInterest internally, so a more efficient flow would look like this:
+<img alt="efficient self hat illustration" src="../img/rToken_interest_process4.png" title="efficient self hat illustration" /></p>
+<p><em>Common write functions:</em></p>
+<ul>
+<li>
+<p><code>initialize(address underlyingAsset, string memory name_, string memory symbol_, uint256 decimals_) public</code> – set the parameters of an rToken at deployment</p>
+</li>
+<li>
+<p><code>mint(uint256 mintAmount) external nonReentrant returns (bool)</code></p>
+</li>
+<li>
+<p><code>mintWithSelectedHat(uint256 mintAmount, uint256 hatID) external nonReentrant returns (bool)</code></p>
+</li>
+<li>
+<p><code>mintWithNewHat(uint256 mintAmount, address[] calldata recipients, uint32[] calldata proportions) external nonReentrant returns (bool)</code></p>
+</li>
+<li>
+<p><code>redeem(uint256 redeemAmount) external nonReentrant returns (bool)</code></p>
+</li>
+<li>
+<p><code>redeemAll() external nonReentrant returns (bool)</code></p>
+</li>
+<li>
+<p><code>transfer(address dst, uint256 amount) external nonReentrant returns (bool)</code></p>
+</li>
+<li>
+<p><code>transferAll(address dst) external nonReentrant returns (bool)</code></p>
+</li>
+<li>
+<p><code>payInterest(address )</code></p>
+</li>
+<li>
+<p><code>changeHatForBucket(uint256 newHatID, uint32 bucket) external nonReentrant returns (bool)</code></p>
+</li>
+<li>
+<p><code>changeHatForAllBuckets(uint256 newHatID) external nonReentrant returns (bool)</code></p>
+</li>
+</ul>
+<p><em>Common read functions:</em></p>
+<ul>
+<li>
+<p><code>getHatsByAddress(address owner) external view returns (hats[])</code></p>
+</li>
+<li>
+<p><code>getBucketsByAddress(address owner) external view returns (userBuckets[])</code></p>
+</li>
+<li>
+<p><code>receivedSavingsOf(address owner) external view returns (uint256 amount)</code></p>
+</li>
+<li>
+<p><code>receivedLoanOf(address owner) external view returns (uint256 amount)</code></p>
+</li>
+<li>
+<p><code>interestPayableOf(address owner) external view returns (uint256 amount)</code></p>
+</li>
+<li>
+<p><code>getUnderlyingAsset() public view returns (address)</code></p>
+</li>
+<li>
+<p><code>balanceOf(address owner) external view returns (uint256 amount)</code></p>
+</li>
+<li>
+<p><code>allowance(address owner, address spender) external view returns (uint256)</code> </p>
+</li>
+</ul>
+              
+            </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../overview/" class="btn btn-neutral float-right" title="Overview">Next <span class="icon icon-circle-arrow-right"></span></a>
+      
+      
+        <a href=".." class="btn btn-neutral" title="Welcome to rToken"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+    
+  </div>
+
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+      
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" aria-label="versions">
+    <span class="rst-current-version" data-toggle="rst-current-version">
+      
+          <a href="https://github.com/rtoken-project/rtoken-monorepo/tree/master/packages/contracts/" class="fa fa-github" style="float: left; color: #fcfcfc"> GitHub</a>
+      
+      
+        <span><a href=".." style="color: #fcfcfc;">&laquo; Previous</a></span>
+      
+      
+        <span style="margin-left: 15px"><a href="../overview/" style="color: #fcfcfc">Next &raquo;</a></span>
+      
+    </span>
+</div>
+    <script>var base_url = '..';</script>
+    <script src="../js/theme.js" defer></script>
+      <script src="../search/main.js" defer></script>
+    <script defer>
+        window.onload = function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        };
+    </script>
+
+</body>
+</html>
