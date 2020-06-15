@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  
+  <link rel="shortcut icon" href="../img/favicon.ico">
+  <title>Elements - rToken Docs</title>
+  <link href='https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700' rel='stylesheet' type='text/css'>
+
+  <link rel="stylesheet" href="../css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../css/theme_extra.css" type="text/css" />
+  <link rel="stylesheet" href="../css/highlight.css">
+  
+  <script>
+    // Current page data
+    var mkdocs_page_name = "Elements";
+    var mkdocs_page_input_path = "elements.md";
+    var mkdocs_page_url = "/elements/";
+  </script>
+  
+  <script src="../js/jquery-2.1.1.min.js"></script>
+  <script src="../js/modernizr-2.8.3.min.js"></script>
+  <script type="text/javascript" src="../js/highlight.pack.js"></script> 
+  
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+      <div class="wy-side-nav-search">
+        <a href=".." class="icon icon-home"> rToken Docs</a>
+        <div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+	<ul class="current">
+	  
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="..">Home</a>
+	    </li>
+          
+            <li class="toctree-l1 current">
+		
+    <a class="current" href="./">Elements</a>
+    <ul class="subnav">
+            
+    <li class="toctree-l2"><a href="#elements">Elements</a></li>
+    
+        <ul>
+        
+            <li><a class="toctree-l3" href="#rtokens">rTokens</a></li>
+        
+            <li><a class="toctree-l3" href="#hats">Hats</a></li>
+        
+            <li><a class="toctree-l3" href="#user-buckets">User Buckets</a></li>
+        
+            <li><a class="toctree-l3" href="#allocation-strategies">Allocation Strategies</a></li>
+        
+            <li><a class="toctree-l3" href="#switchboard-registry">Switchboard Registry</a></li>
+        
+        </ul>
+    
+
+    </ul>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../interest/">Interest</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../overview/">Overview</a>
+	    </li>
+          
+        </ul>
+      </div>
+      &nbsp;
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="..">rToken Docs</a>
+      </nav>
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="..">Docs</a> &raquo;</li>
+    
+      
+    
+    <li>Elements</li>
+    <li class="wy-breadcrumbs-aside">
+      
+        <a href="https://github.com/rtoken-project/rtoken-monorepo/tree/master/packages/contracts/edit/master/docs/elements.md"
+          class="icon icon-github"> Edit on GitHub</a>
+      
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main">
+            <div class="section">
+              
+                <h2 id="elements">Elements</h2>
+<hr />
+<h3 id="rtokens"><strong>rTokens</strong></h3>
+<p>rTokens are wrapped versions of underlying ERC20 assets that earn interest that can be redirected to flow to recipients that the holder of the underlying asset chooses.</p>
+<p>The rToken contract keeps track of the total amount of minted rTokens, user balances, and User Buckets. </p>
+<h5 id="deployment"><em>Deployment</em></h5>
+<p>At deployment, an rToken contract must specify the address of the underlying ERC20 asset. To be useful as an rToken, the underlying ERC20 asset should be available to supply on one or more  platforms for which an Allocation Strategy has been written to manage and redirect interest.</p>
+<h5 id="rtoken-accounts"><em>rToken Accounts</em></h5>
+<p>Each address has an rToken Account. The account data includes:
+<code>userBuckets</code> – an array specifying the amounts of rTokens committed to each active <code>hatID</code>
+internal accounting information,
+account statistics.</p>
+<h5 id="minting"><em>Minting</em></h5>
+<p>rTokens are minted and redeemed at a ratio of 1:1 to their underlying asset. So 25 DAI can mint 25 rDAI, which are then redeemable for 25 DAI.</p>
+<p>Like other ERC20 wrapper contracts, rToken contracts require holders of the underlying asset to <code>approve</code> the amount of the asset to be used to mint rTokens. This amount can be queried with <code>allowance</code>.</p>
+<p>There are three minting functions:</p>
+<ol>
+<li>
+<p><code>mint(uint256 amount)</code> - </p>
+</li>
+<li>
+<p><code>mintWithSelectedHat(uint256 amount uint256 hatID)</code> - </p>
+</li>
+</ol>
+<h5 id="control-over-interest-streams"><em>Control Over Interest Streams</em></h5>
+<p>The holder of the underlying asset remains in control of where the interest streams flow, but cannot claw back interest that has already been redirected. The holder can stop sending interest to a recipient (or recipients) by: 1) redeeming all the principal for the underlying asset or 2) changing the set of recipients with the <code>changeHat</code> function. </p>
+<h5 id="accounting-construct"><em>Accounting Construct</em></h5>
+<p>rTokens work by recording the amount of the underlying asset that an address mints (the principal) as a fixed debt that must be repaid, and then “lending” out the now interest earning principal to the interest recipients. The recipients can redeem the amount of rTokens that have accrued from interest, but they cannot redeem the debt portion which represents the principal.</p>
+<p><em>Example</em></p>
+<blockquote>
+<p>Alice mints 1,000 rDAI and designates Bob as the only interest recipient. </p>
+<p>At that time Bob has received a loan of 1,000 rDAI and a debt to repay 1,000 rDAI to Alice, meaning a net position of 0 rDAI.  </p>
+<p>If Bob calls redeemAll() to try to get all the underlying DAI, he will not receive anything because he can only redeem the amount in excess of the debt. </p>
+<p>Now fast forward to a time when 75 DAI in interest has accumulated. Bob's “loan” is now worth 1,075 DAI but his debt remains 1,000 DAI, so he can redeem 75 DAI.   </p>
+</blockquote>
+<h5 id="common-write-functions"><em>Common write functions</em></h5>
+<h6 id="initialize">Initialize</h6>
+<ul>
+<li><code>initialize(address underlyingAsset, string memory name_, string memory symbol_, uint256 decimals_) public</code> – set the parameters of an rToken at deployment</li>
+</ul>
+<h6 id="approve">Approve</h6>
+<p><code>approve(address owner address spender) external public returns (bool)</code> - allow rToken minting from underlying ERC20 asset</p>
+<h6 id="minting_1">Minting</h6>
+<ul>
+<li>
+<p><code>mint(uint256 mintAmount) external nonReentrant returns (bool)</code> - swap underlying asset for rTokens at 1:1 ratio, e.g. <code>mint</code> 100 rDAI from 100 DAI - by default, will send interest to minter's address </p>
+</li>
+<li>
+<p><code>mintWithSelectedHat(uint256 mintAmount, uint256 hatID) external nonReentrant returns (bool)</code> - mint rTokens into specified <code>hatID</code> </p>
+</li>
+<li>
+<p><code>mintWithNewHat(uint256 mintAmount, address[] calldata recipients, uint32[] calldata proportions) external nonReentrant returns (bool)</code> - create a new hat and mint rTokens into that <code>hatID</code></p>
+</li>
+<li>
+<p>NEW FOR V2 <code>mintWithUserBuckets(uint256 mintAmount) external nonReentrant returns (bool)</code> - same as <code>mint</code> except the newly minted rTokens will increase all <code>userBucket</code> balances proportionally - can be gas-inefficient  </p>
+</li>
+</ul>
+<h6 id="redemption">Redemption</h6>
+<ul>
+<li>
+<p><code>redeem(uint256 redeemAmount) external nonReentrant returns (bool)</code> - redeem specified rTokens for underlying ERC20 asset at 1:1 ratio</p>
+</li>
+<li>
+<p><code>redeemAll() external nonReentrant returns (bool)</code> - redeem all rTokens for underlying ERC20 asset at 1:1 ratio</p>
+</li>
+</ul>
+<h6 id="transfers">Transfers</h6>
+<ul>
+<li>
+<p><code>transfer(address dst, uint256 amount) external nonReentrant returns (bool)</code> - standard ERC20 transfer function  </p>
+</li>
+<li>
+<p><code>transferAll(address dst) external nonReentrant returns (bool)</code> - standard ERC20 transferAll function - can be gas inefficient if userBuckets include multiple allocation strategies</p>
+</li>
+</ul>
+<h6 id="claiming-accrued-interest">Claiming Accrued Interest</h6>
+<ul>
+<li><code>payInterest(address )</code></li>
+</ul>
+<h6 id="changing-hats">Changing Hats</h6>
+<ul>
+<li>
+<p><code>changeHatForBucket(uint256 newHatID, uint32 bucket) external nonReentrant returns (bool)</code></p>
+</li>
+<li>
+<p><code>changeHatForAllBuckets(uint256 newHatID) external nonReentrant returns (bool)</code></p>
+</li>
+</ul>
+<h5 id="common-read-functions"><em>Common read functions</em></h5>
+<ul>
+<li>
+<p><code>getHatsByAddress(address owner) external view returns (hats[])</code></p>
+</li>
+<li>
+<p><code>getBucketsByAddress(address owner) external view returns (userBuckets[])</code></p>
+</li>
+<li>
+<p><code>receivedSavingsOf(address owner) external view returns (uint256 amount)</code></p>
+</li>
+<li>
+<p><code>receivedLoanOf(address owner) external view returns (uint256 amount)</code></p>
+</li>
+<li>
+<p><code>interestPayableOf(address owner) external view returns (uint256 amount)</code></p>
+</li>
+<li>
+<p><code>getUnderlyingAsset() public view returns (address)</code></p>
+</li>
+<li>
+<p><code>balanceOf(address owner) external view returns (uint256 amount)</code></p>
+</li>
+<li>
+<p><code>allowance(address owner, address spender) external view returns (uint256)</code> </p>
+</li>
+</ul>
+<hr />
+<h3 id="hats">Hats</h3>
+<p>Hats contain the instructions for where to generate and redirect the interest on rTokens. Each hat specifies to which addresses the interest should flow and in what proportions, where the underlying asset should be invested to earn interest, and if the hat can be changed, by who. 
+Hats are ERC721 NFTs.</p>
+<h5 id="hat-parameters">Hat Parameters</h5>
+<p>A hat contains the following four parameters:</p>
+<p><code>recipients</code> - an array of up to 50 addresses where the interest should flow</p>
+<p><code>proportions</code> - an array specifying the proportion of the interest each recipient should receive – this array must have the same length as <code>recipients</code></p>
+<p><code>allocationStrategy</code> - an address (enum?) specifying the liquidity pool to deposit the underlying asset to earn interest from (e.g. Compound, Aave, etc)</p>
+<p><code>manager</code> - an address specifying who can modify the hat's parameters – can be set to the 0x000... address to make a hat immutable</p>
+<p>The parameters <code>recipients</code> and <code>proportions</code> are the central programmable components of rToken interest. The number of recipients in a hat can be just one or up to 50 (this maximum number is there to avoid a possible out-of-gas reversion error).  Proportions can be set arbitrarily and the contract will allocate the interest as a proportion of the maximum uint32 number (4,294,967,295 in decimal), so if the proportions entered were  [1, 2, 3, 4] meaning the fourth recipient received 4x the interest as the first, the <code>proportions</code> stored on chain would be [429496730, 858993459, 1288490188, 1717986918].</p>
+<p>The <code>allocationStrategy</code> parameter points to the address of the deployed contract that invests the underlying asset in a particular lending protocol, such as Compound's cTokens or Aave's aTokens. </p>
+<p>The <code>manager</code> parameter will typically be the creator of a hat that others might want to use, such as a charity dapp.  The manager has the power to modify the other three parameters of the hat - <code>recipients</code> <code>proportions</code> and <code>allocationStrategy</code> - pursuant to the rules surrounding modifying hats (link). </p>
+<p>None of the hat parameters are exclusive, either separately or together – there are no squatter's rights to being the first manager for a potentially popular combination of <code>recipients</code>, <code>proportions</code> and <code>allocationStrategy.</code> </p>
+<h5 id="changeable-hats">Changeable Hats</h5>
+<p>Changeable hats have several substantive use cases, including allowing trusted dapp managers to be able to redirect interest to better serve their users' ends, to swap out of an underperforming lending pool to obtain higher yields or to switch to a more stable/liquid lending pool.rToken-powered dapps would otherwise require each user to manually change hats whenever it recommended a different set of parameters.  Changeable hats do introduce a potential for abuse by the managers, but because changes are emitted as events, malicious managers cannot act in stealth, nor do they have any control over the holder's principal assets, only forward looking interest streams.</p>
+<h5 id="immutable-hats">Immutable Hats</h5>
+<p>There may be use cases where hat immutability is desirable to prevent the possibility of mismanagement. Immutable hats can be created by assigning the burn address (0x0000000000000000000000000000000000000000) in the <code>manager</code> parameter. </p>
+<hr />
+<h3 id="user-buckets">User Buckets</h3>
+<p>User Buckets, added for rToken V2, are tranches of rTokens assigned to a particular Hat. A bucket can contain some or all of the user's rToken balance.  Buckets are a design solution to the “hat yanking” problem described here[https://medium.com/rtoken-project/rdai-v2-the-redirectening-90b6a9115799].  </p>
+<p>Each rToken holder has a <code>userBuckets</code> array with each slot specifying the <code>hatID</code> and the <code>amount</code> of the rToken used in that Hat. The first array position (slot 0) is reserved as a self-hat that redirects the interest to the user, similar to directly lending assets in a liquidity pool. </p>
+<p>User Buckets are created and maintained automatically within the rToken contract.</p>
+<p><em>Example</em></p>
+<blockquote>
+<p>Assume Alice mints 100 rDAI, and donates the interest on 40 rDAI to Charity X. </p>
+<p>Her <code>userBuckets</code> array now contains two slots, with the self-hat slot 0 holding <code>amount: 60</code> and slot 1 pointing to <code>hatID: [Hat with Charity X address]</code> holding <code>amount: 40</code>. </p>
+<p>Later Alice decides to send the interest on the remaining 60 rDAI to Charity Y.  </p>
+<p>Now <code>userBuckets</code> has three slots with <code>amount</code> 0, 40 and 60 respectively.</p>
+<p>[TBD: when a user redeems the amount in a bucket, is that <code>userBuckets</code> array slot deleted  or preserved with a 0 <code>amount</code>? Preserving old buckets might lead to state bloat, but might be useful for historical accounting purposes. Deleting buckets could reduce state size, but may lead to complications if dapps or other entities seek to query particular hat/bucket data based on slot position]</p>
+</blockquote>
+<h5 id="common-read-functions_1"><em>Common read functions</em></h5>
+<p><code>getUserBuckets(address owner) public view returns []</code> - returns an array containing the address' <code>userBuckets</code>  </p>
+<h3 id="allocation-strategies">Allocation Strategies</h3>
+<p>Allocation Strategies specify how to earn interest from a decentralized finance liquidity pools and how to track the correct rToken balance, including both the original principal amount and the amount of interest that is redirected.</p>
+<p>Each Allocation Strategy is customized to the mechanics of a particular decentralized liquidity protocol that allows holders of underlying ERC20 assets to earn interest. Currently rToken allocation strategies have been written for Compound and Aave. </p>
+<h5 id="creating-an-allocation-strategy">Creating an Allocation Strategy</h5>
+<h5 id="whitelisting-an-allocation-strategy">Whitelisting an Allocation Strategy</h5>
+<hr />
+<h3 id="switchboard-registry">Switchboard Registry</h3>
+<p>Hats are created, stored and modified in a registry contract called Switchboard.sol.  </p>
+<p>Any rToken may be used with any hat, provided its underlying asset (e.g. DAI, SNX, etc) is available on the hat's allocation strategy platform.</p>
+<h5 id="creating-a-new-hat">Creating a New Hat</h5>
+<p>Anyone can create a new hat by calling <code>createHat</code> and passing <code>address[] recipients</code> <code>uint256[] proportions</code> <code>address(enum?) allocationStrategy</code> and <code>address manager</code>.</p>
+<p>Created hats are assigned a sequential immutable <code>hatID</code>. Hats cannot be deleted.</p>
+<h5 id="modifying-a-hat">Modifying a Hat</h5>
+<p>The <code>manager</code> address has the power to modify the hat's parameters, including by changing the <code>manager</code> which transfers control of the hat. </p>
+<p>Modifications to a hat emit the HatModified event.</p>
+<p>modifyHat(uint256 hatID, address[] memory recipients, uint256[] memory proportions, address (enum?) allocationStrategy, address manager) external onlyManager returns (bool)
+[TBD: Is there a gas savings reason to split this function into three or four separate functions like modifyHatRecipients, modifyHatProportions, modifyHatStrategy, modifyHatManager?)</p>
+              
+            </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../interest/" class="btn btn-neutral float-right" title="Interest">Next <span class="icon icon-circle-arrow-right"></span></a>
+      
+      
+        <a href=".." class="btn btn-neutral" title="Home"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+    
+  </div>
+
+  Built with <a href="http://www.mkdocs.org">MkDocs</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+	  
+        </div>
+      </div>
+
+    </section>
+    
+  </div>
+
+  <div class="rst-versions" role="note" style="cursor: pointer">
+    <span class="rst-current-version" data-toggle="rst-current-version">
+      
+          <a href="https://github.com/rtoken-project/rtoken-monorepo/tree/master/packages/contracts" class="fa fa-github" style="float: left; color: #fcfcfc"> GitHub</a>
+      
+      
+        <span><a href=".." style="color: #fcfcfc;">&laquo; Previous</a></span>
+      
+      
+        <span style="margin-left: 15px"><a href="../interest/" style="color: #fcfcfc">Next &raquo;</a></span>
+      
+    </span>
+</div>
+    <script src="../js/theme.js"></script>
+
+</body>
+</html>
