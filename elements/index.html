@@ -7,24 +7,26 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
   
+  
   <link rel="shortcut icon" href="../img/favicon.ico">
   <title>Elements - rToken Docs</title>
-  <link href='https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700' rel='stylesheet' type='text/css'>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700" />
 
-  <link rel="stylesheet" href="../css/theme.css" type="text/css" />
-  <link rel="stylesheet" href="../css/theme_extra.css" type="text/css" />
-  <link rel="stylesheet" href="../css/highlight.css">
+  <link rel="stylesheet" href="../css/theme.css" />
+  <link rel="stylesheet" href="../css/theme_extra.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css" />
   
   <script>
     // Current page data
     var mkdocs_page_name = "Elements";
     var mkdocs_page_input_path = "elements.md";
-    var mkdocs_page_url = "/elements/";
+    var mkdocs_page_url = null;
   </script>
   
-  <script src="../js/jquery-2.1.1.min.js"></script>
-  <script src="../js/modernizr-2.8.3.min.js"></script>
-  <script type="text/javascript" src="../js/highlight.pack.js"></script> 
+  <script src="../js/jquery-2.1.1.min.js" defer></script>
+  <script src="../js/modernizr-2.8.3.min.js" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script> 
   
 </head>
 
@@ -34,62 +36,103 @@
 
     
     <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+    <div class="wy-side-scroll">
       <div class="wy-side-nav-search">
         <a href=".." class="icon icon-home"> rToken Docs</a>
         <div role="search">
   <form id ="rtd-search-form" class="wy-form" action="../search.html" method="get">
-    <input type="text" name="q" placeholder="Search docs" />
+    <input type="text" name="q" placeholder="Search docs" title="Type search term here" />
   </form>
 </div>
       </div>
 
       <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
-	<ul class="current">
-	  
-          
-            <li class="toctree-l1">
-		
-    <a class="" href="..">Home</a>
-	    </li>
-          
-            <li class="toctree-l1 current">
-		
-    <a class="current" href="./">Elements</a>
-    <ul class="subnav">
-            
-    <li class="toctree-l2"><a href="#elements">Elements</a></li>
-    
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="..">Welcome to rToken V2 Documentation</a>
+                    </li>
+                </ul>
+                <ul class="current">
+                    <li class="toctree-l1 current"><a class="reference internal current" href="./">Elements</a>
+    <ul class="current">
+    <li class="toctree-l2"><a class="reference internal" href="#rtokens">rTokens</a>
         <ul>
-        
-            <li><a class="toctree-l3" href="#rtokens">rTokens</a></li>
-        
-            <li><a class="toctree-l3" href="#hats">Hats</a></li>
-        
-            <li><a class="toctree-l3" href="#user-buckets">User Buckets</a></li>
-        
-            <li><a class="toctree-l3" href="#allocation-strategies">Allocation Strategies</a></li>
-        
-            <li><a class="toctree-l3" href="#switchboard-registry">Switchboard Registry</a></li>
-        
+    <li class="toctree-l3"><a class="reference internal" href="#deployment">Deployment</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#rtoken-accounts">rToken Accounts</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#minting">Minting</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#control-over-interest-streams">Control Over Interest Streams</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#accounting-construct">Accounting Construct</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#common-write-functions">Common write functions</a>
+        <ul>
+    <li class="toctree-l4"><a class="reference internal" href="#initialize">Initialize</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#approve">Approve</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#minting_1">Minting</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#redemption">Redemption</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#transfers">Transfers</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#claiming-accrued-interest">Claiming Accrued Interest</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#changing-hats">Changing Hats</a>
+    </li>
         </ul>
-    
-
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#common-read-functions">Common read functions</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#hats">Hats</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#hat-parameters">Hat Parameters</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#changeable-hats">Changeable Hats</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#immutable-hats">Immutable Hats</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#user-buckets">User Buckets</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#common-read-functions_1">Common read functions</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#allocation-strategies">Allocation Strategies</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#creating-an-allocation-strategy">Creating an Allocation Strategy</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#whitelisting-an-allocation-strategy">Whitelisting an Allocation Strategy</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#switchboard-registry">Switchboard Registry</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#creating-a-new-hat">Creating a New Hat</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#modifying-a-hat">Modifying a Hat</a>
+    </li>
+        </ul>
+    </li>
     </ul>
-	    </li>
-          
-            <li class="toctree-l1">
-		
-    <a class="" href="../interest/">Interest</a>
-	    </li>
-          
-            <li class="toctree-l1">
-		
-    <a class="" href="../overview/">Overview</a>
-	    </li>
-          
-        </ul>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../interest/">Interest</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../overview/">Overview</a>
+                    </li>
+                </ul>
       </div>
-      &nbsp;
+    </div>
     </nav>
 
     <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
@@ -117,6 +160,7 @@
       
     </li>
   </ul>
+  
   <hr/>
 </div>
           <div role="main">
@@ -297,7 +341,7 @@ Hats are ERC721 NFTs.</p>
         <a href="../interest/" class="btn btn-neutral float-right" title="Interest">Next <span class="icon icon-circle-arrow-right"></span></a>
       
       
-        <a href=".." class="btn btn-neutral" title="Home"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+        <a href=".." class="btn btn-neutral" title="Welcome to rToken V2 Documentation"><span class="icon icon-circle-arrow-left"></span> Previous</a>
       
     </div>
   
@@ -309,20 +353,20 @@ Hats are ERC721 NFTs.</p>
     
   </div>
 
-  Built with <a href="http://www.mkdocs.org">MkDocs</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
 </footer>
-	  
+      
         </div>
       </div>
 
     </section>
-    
+
   </div>
 
-  <div class="rst-versions" role="note" style="cursor: pointer">
+  <div class="rst-versions" role="note" aria-label="versions">
     <span class="rst-current-version" data-toggle="rst-current-version">
       
-          <a href="https://github.com/rtoken-project/rtoken-monorepo/tree/master/packages/contracts" class="fa fa-github" style="float: left; color: #fcfcfc"> GitHub</a>
+          <a href="https://github.com/rtoken-project/rtoken-monorepo/tree/master/packages/contracts/" class="fa fa-github" style="float: left; color: #fcfcfc"> GitHub</a>
       
       
         <span><a href=".." style="color: #fcfcfc;">&laquo; Previous</a></span>
@@ -332,7 +376,14 @@ Hats are ERC721 NFTs.</p>
       
     </span>
 </div>
-    <script src="../js/theme.js"></script>
+    <script>var base_url = '..';</script>
+    <script src="../js/theme.js" defer></script>
+      <script src="../search/main.js" defer></script>
+    <script defer>
+        window.onload = function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        };
+    </script>
 
 </body>
 </html>
